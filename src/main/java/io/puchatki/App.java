@@ -2,8 +2,10 @@ package io.puchatki;
 
 import io.puchatki.logic.FilesAnalyzer;
 import io.puchatki.logic.MethodAnalyzer;
+import io.puchatki.logic.PackageAnalyzer;
 import io.puchatki.model.FileDescription;
 import io.puchatki.model.MethodDescription;
+import io.puchatki.model.PackageDescription;
 
 import java.io.File;
 import java.io.BufferedWriter;
@@ -38,6 +40,7 @@ public class App {
         }
 
         StringBuilder graphBuilder = new StringBuilder();
+        List<PackageDescription> packageDescriptionList = PackageAnalyzer.generatePackageDetailsDependencies(graphBuilder);
 
 
         graphBuilder.insert(0, "digraph G { ");
@@ -55,7 +58,7 @@ public class App {
             f.delete();
         }
 
-        DependenciesGraph dependenciesGraph = new DependenciesGraph(fileDependencies, methodDescriptionList, methodInPackage);
+        DependenciesGraph dependenciesGraph = new DependenciesGraph(fileDependencies, methodDescriptionList, packageDescriptionList, methodInPackage);
 
         GenerateGraphs(dependenciesGraph);
     }
